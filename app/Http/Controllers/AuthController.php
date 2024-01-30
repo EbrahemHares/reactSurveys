@@ -13,6 +13,8 @@ class AuthController extends Controller
     public function signup(SignupRequest $request)
     {
         $data = $request->validated();
+
+        /** @var \App\Models\User $user */
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -22,20 +24,21 @@ class AuthController extends Controller
 
         return response([
             'user' => $user,
-            'token' => $token,
+            'token' => $token
         ]);
     }
-
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
         $remember = $credentials['remember'] ?? false;
         unset($credentials['remember']);
+
         if (!Auth::attempt($credentials, $remember)) {
             return response([
                 'error' => 'The Provided credentials are not correct try again!'
             ], 422);
         }
+
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
 

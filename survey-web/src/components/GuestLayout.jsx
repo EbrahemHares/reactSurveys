@@ -17,7 +17,6 @@ export default function GuestLayout() {
                     alt="Your Company"
                 />
             </div>
-
             <Outlet />
         </div>
     );
