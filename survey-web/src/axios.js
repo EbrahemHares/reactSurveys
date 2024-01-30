@@ -1,6 +1,8 @@
 import axios from "axios";
 import router from "./router";
 
+console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
+
 const axiosClient = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
 });
@@ -8,6 +10,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
     const token = "123";
     config.headers.Authorization = `Bearer ${token}`;
+    return config;
 });
 
 axiosClient.interceptors.response.use(
